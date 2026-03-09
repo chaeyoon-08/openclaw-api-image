@@ -14,7 +14,15 @@ RUN apt-get update && apt-get install -y \
 # OpenClaw 설치
 ENV PATH="/root/.npm-global/bin:$PATH"
 RUN npm config set prefix '/root/.npm-global'
-RUN npm install -g openclaw
+RUN npm install -g openclaw && \
+    echo "=== which openclaw ===" && \
+    which openclaw || true && \
+    echo "=== npm global bin ===" && \
+    npm bin -g && \
+    echo "=== /root/.npm-global/bin ===" && \
+    ls /root/.npm-global/bin || true && \
+    echo "=== /usr/local/bin ===" && \
+    ls /usr/local/bin | grep openclaw || true
 
 # OpenClaw 워크스페이스 초기화
 RUN /root/.npm-global/bin/openclaw setup --workspace /workspace
