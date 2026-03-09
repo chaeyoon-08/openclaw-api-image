@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # OpenClaw 설치
+ENV PATH="/root/.npm-global/bin:$PATH"
+RUN npm config set prefix '/root/.npm-global'
 RUN npm install -g openclaw
 
 # agents/skills 없음 — 컨테이너 시작 시 레포를 git clone해서 사용
