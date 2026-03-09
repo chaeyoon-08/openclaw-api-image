@@ -2,30 +2,24 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Node.js 20 + 기본 도구 설치
+# Node.js 22 + 기본 도구 설치
 RUN apt-get update && apt-get install -y \
     curl \
     git \
     ca-certificates \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    build-essential \
+    python3 \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # OpenClaw 설치
 ENV PATH="/root/.npm-global/bin:$PATH"
 RUN npm config set prefix '/root/.npm-global'
-RUN npm install -g openclaw && \
-    echo "=== which openclaw ===" && \
-    which openclaw || true && \
-    echo "=== npm global bin ===" && \
-    npm bin -g && \
-    echo "=== /root/.npm-global/bin ===" && \
-    ls /root/.npm-global/bin || true && \
-    echo "=== /usr/local/bin ===" && \
-    ls /usr/local/bin | grep openclaw || true
+RUN npm install -g openclaw@latest
 
 # OpenClaw 워크스페이스 초기화
-RUN /root/.npm-global/bin/openclaw setup --workspace /workspace
+RUN openclaw setup --workspace /workspace
 
 # agents/skills 내장 (run 버전 핵심: 이미지에 포함)
 COPY agents/ /workspace/agents/
