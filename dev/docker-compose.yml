@@ -1,0 +1,24 @@
+services:
+  openclaw:
+    image: ghcr.io/${GITHUB_USERNAME:-your-username}/openclaw-api-image-dev:latest
+    restart: unless-stopped
+    environment:
+      # GitHub (필수 — clone에 필요)
+      - GITHUB_USERNAME=${GITHUB_USERNAME}
+      - GITHUB_EMAIL=${GITHUB_EMAIL}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      # API 키 (셋 중 하나 필수)
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      # Telegram (필수)
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      # Google OAuth (필수)
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REFRESH_TOKEN=${GOOGLE_REFRESH_TOKEN}
+      # 클론할 레포 (선택 — 기본값: https://github.com/$GITHUB_USERNAME/openclaw-api-dev.git)
+      - OPENCLAW_DEV_REPO=${OPENCLAW_DEV_REPO:-}
+    volumes:
+      # 로컬 코드 마운트 옵션 (개발 시 활성화)
+      # - ./openclaw-api-dev:/workspace/openclaw-api-dev

@@ -1,0 +1,19 @@
+services:
+  openclaw:
+    image: ghcr.io/${GITHUB_USERNAME:-your-username}/openclaw-api-image-run:latest
+    restart: unless-stopped
+    environment:
+      # GitHub (선택 — 없으면 WARNING 출력 후 계속 진행)
+      - GITHUB_USERNAME=${GITHUB_USERNAME:-}
+      - GITHUB_EMAIL=${GITHUB_EMAIL:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      # API 키 (셋 중 하나 필수)
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      # Telegram (필수)
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      # Google OAuth (필수)
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REFRESH_TOKEN=${GOOGLE_REFRESH_TOKEN}
