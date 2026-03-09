@@ -17,7 +17,7 @@ RUN npm config set prefix '/root/.npm-global'
 RUN npm install -g openclaw
 
 # OpenClaw 워크스페이스 초기화
-RUN openclaw setup --workspace /workspace
+RUN /root/.npm-global/bin/openclaw setup --workspace /workspace
 
 # agents/skills 내장 (run 버전 핵심: 이미지에 포함)
 COPY agents/ /workspace/agents/
